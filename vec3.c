@@ -40,32 +40,33 @@ void glmc_vec3f_from_2f(vec3f dest, vec2f src_a, float src_b)
 
 void glmc_vec3f_from_4f(vec3f dest, vec4f src)
 {
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = src[i];
-	}
+	dest[0] = src[0];
+	dest[1] = src[1];
+	dest[2] = src[2];
+
 }
 
 void glmc_vec3f_copy(vec3f dest, vec3f src)
 {
-	dest = src;
+	dest[0] = src[0];
+	dest[1] = src[1];
+	dest[2] = src[2];
 }
 
 float glmc_vec3f_sqrlength(vec3f vec)
 {
 	float result=0;
-	for(int i = 0; i < 3; i++)
-	{
-		result = result + (vec[i]*vec[i]);
-	}
+
+	result = result + (vec[0]*vec[0]);
+	result = result + (vec[1]*vec[1]);
+	result = result + (vec[2]*vec[2]);
+
 	return result;
 }
 
 float glmc_vec3f_length(vec3f vec)
 {
-	float result = glmc_vec3f_sqrlength(vec);
-	result = sqrt(result);
-	return result;
+	return sqrt(glmc_vec3f_sqrlength(vec));
 }
 
 int  glmc_vec3f_is_normalized(vec3f src)
@@ -91,150 +92,140 @@ void glmc_vec3f_normlize(vec3f dest, vec3f src)
 	else
 	{
 		float denom_vec = glmc_vec3f_length(src);
-		for(int i = 0; i < 3; i++)
-		{
-			dest[i] = (src[i]/denom_vec);
-		}
+		dest[0] = (src[0]/denom_vec);
+		dest[1] = (src[1]/denom_vec);
+		dest[2] = (src[2]/denom_vec);
 	}
 }
 
 void glmc_vec3f_add(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest = src_a + src_b
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = src_a[i] + src_b[i];
-	}
+	dest[0] = src_a[0] + src_b[0];
+	dest[1] = src_a[1] + src_b[1];
+	dest[2] = src_a[2] + src_b[2];
+
 }
 
 void glmc_vec3f_add_dest(vec3f src_dest, vec3f src_a)
 {
 	// dest += src_a
-	for(int i = 0; i < 3; i++)
-	{
-		src_dest[i] = src_dest[i] + src_a[i];
-	}
+	src_dest[0] = src_dest[0] + src_a[0];
+	src_dest[1] = src_dest[1] + src_a[1];
+	src_dest[2] = src_dest[2] + src_a[2];
 }
 
 void glmc_vec3f_sub(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest = src_a - src_b
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = src_a[i] - src_b[i];
-	}
+	dest[0] = src_a[0] - src_b[0];
+	dest[1] = src_a[1] - src_b[1];
+	dest[2] = src_a[2] - src_b[2];
 }
 
 void glmc_vec3f_sub_dest(vec3f src_dest, vec3f src_a)
 {
 	// dest -= src_a
-	for(int i = 0; i < 3; i++)
-	{
-		src_dest[i] = src_dest[i] - src_a[i];
-	}
+	src_dest[0] = src_dest[0] - src_a[0];
+	src_dest[1] = src_dest[1] - src_a[1];
+	src_dest[2] = src_dest[2] - src_a[2];
 }
 
 void glmc_vec3f_mul(vec3f dest, vec3f src_a, vec3f src_b) 
 {
 	// dest = src_a * src_b
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = src_a[i] * src_b[i];
-	}
+	dest[0] = src_a[0] * src_b[0];
+	dest[1] = src_a[1] * src_b[1];
+	dest[2] = src_a[2] * src_b[2];
 }
 
 void glmc_vec3f_mul_dest(vec3f src_dest, vec3f src_a)
 {
 	// dest *= src_a
-	for(int i = 0; i < 3; i++)
-	{
-		src_dest[i] = src_dest[i] * src_a[i];
-	}
+	src_dest[0] = src_dest[0] * src_a[0];
+	src_dest[1] = src_dest[1] * src_a[1];
+	src_dest[2] = src_dest[2] * src_a[2];
+
 }
 
 void glmc_vec3f_mul_s(vec3f dest, vec3f src_a, float src_b)
 {
 	// dest = src_a * scalar
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = src_a[i] * src_b;
-	}
+	dest[0] = src_a[0] * src_b;
+	dest[1] = src_a[1] * src_b;
+	dest[2] = src_a[2] * src_b;
 }
 
 void glmc_vec3f_div(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest = src_a / src_b
-	for(int i = 0; i < 3; i++)
-	{
-		assert(src_b[i] != 0);
-		dest[i] = src_a[i] / src_b[i];
-	}
+	//Avoid division by zero
+	assert(src_b[0] != 0);
+	assert(src_b[1] != 0);
+	assert(src_b[2] != 0);
+
+	dest[0] = src_a[0] / src_b[0];
+	dest[1] = src_a[1] / src_b[1];
+	dest[2] = src_a[2] / src_b[2];
+
 }
 
 void glmc_vec3f_div_dest(vec3f src_dest, vec3f src_b)
 {
 	// dest /= src_a;
-	for(int i = 0; i < 3; i++)
-	{
-		assert(src_b[i] != 0);
-		src_dest[i] = src_dest[i] / src_b[i];
-	}
+	glmc_vec3f_div(src_dest,src_dest,src_b);
 }
 
 void glmc_vec3f_div_s(vec3f dest, vec3f src_a, float src_b) 
 {
 	// dest = src_a / scalar
-	for(int i = 0; i < 3; i++)
-	{
-		assert(src_b != 0.0f);
-		dest[i] = dest[i] / src_b;
-	}
+	assert(src_b != 0.0f);
+	dest[0] = dest[0] / src_b;
+	dest[1] = dest[1] / src_b;
+	dest[2] = dest[2] / src_b;
 }
 
 void glmc_vec3f_addadd(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest += src_a + src_b;
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = dest[i] + src_a[i] + src_b[i];
-	}
+	dest[0] = dest[0] + src_a[0] + src_b[0];
+	dest[1] = dest[1] + src_a[1] + src_b[1];
+	dest[2] = dest[2] + src_a[2] + src_b[2];
+
 }
 
 void glmc_vec3f_subadd(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest += src_a - src_b;
-	for(int i = 0; i < 3; i++)
-	{
-		dest[i] = dest[i] + src_a[i] - src_b[i];
-	}
+	dest[0] = dest[0] + src_a[0] - src_b[0];
+	dest[1] = dest[1] + src_a[1] - src_b[1];
+	dest[2] = dest[2] + src_a[2] - src_b[2];
 }
 
 void glmc_vec3f_madd(vec3f dest, vec3f src_a, vec3f src_b)
 {
 	// dest += src_a * src_b
-	for(int i = 0; i < 3; i++)
-		{
-			dest[i] = dest[i] + (src_a[i] * src_b[i]);
-		}
+	dest[0] = dest[0] + (src_a[0] * src_b[0]);
+	dest[1] = dest[1] + (src_a[1] * src_b[1]);
+	dest[2] = dest[2] + (src_a[2] * src_b[2]);
 }
 
 void glmc_vec3f_msub(vec3f dest, vec3f src_a, vec3f src_b)
 {
-	//dest += src_a * src_b
-	for(int i = 0; i < 3; i++)
-		{
-			dest[i] = dest[i] - (src_a[i] * src_b[i]);
-		}
+	//dest -= src_a * src_b
+	dest[0] = dest[0] - (src_a[0] * src_b[0]);
+	dest[1] = dest[1] - (src_a[1] * src_b[1]);
+	dest[2] = dest[2] - (src_a[2] * src_b[2]);
 }
 
 float glmc_vec3f_dot(vec3f src_a, vec3f src_b)
 {
 	//sum(src_a[i]*src_b[i])
 	float result=0;
-	for(int i = 0; i < 3; i++)
-	{
-		result = result + (src_a[i] * src_b[i]);
-	}
+	result = result + (src_a[0] * src_b[0]);
+	result = result + (src_a[1] * src_b[1]);
+	result = result + (src_a[2] * src_b[2]);
+	return result;
 }
 
 void  glmc_vec3f_cross(vec3f dest, vec3f src_a, vec3f src_b)
