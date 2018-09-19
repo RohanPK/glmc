@@ -31,7 +31,7 @@
 //Since float is rounded down
 #define MIN_FLOAT_ERROR 1.0e-7
 
-void glmc_vec2f_from_3f(vec2f dest, vec2f src_a, float src_b)
+void glmc_vec2f_from_3f(vec2f dest, vec3f src_a)
 {
 	dest[0] = src_a[0];
 	dest[1] = src_a[1];
@@ -172,8 +172,8 @@ void glmc_vec2f_div_s(vec2f dest, vec2f src_a, float src_b)
 void glmc_vec2f_addadd(vec2f dest, vec2f src_a, vec2f src_b)
 {
 	// dest += src_a + src_b;
-	dest[i] = dest[0] + src_a[0] + src_b[0];
-	dest[i] = dest[1] + src_a[1] + src_b[1];
+	dest[0] = dest[0] + src_a[0] + src_b[0];
+	dest[1] = dest[1] + src_a[1] + src_b[1];
 
 }
 
