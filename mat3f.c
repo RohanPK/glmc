@@ -262,6 +262,34 @@ inline void glmc_mat3f_mul_dest_s(mat3f src_dest, float src_b)
 	src_dest[2][2] = src_dest[2][2] * src_b;
 }
 
+inline void glmc_mat3f_div(mat3f dest, mat3f src_a, mat3f src_b)
+{
+	mat3f src_b_inv;
+	glmc_mat3f_inverse(src_b_inv, src_b);
+	glmc_mat3f_mul(dest, src_a, src_b_inv);
+}
+
+inline void glmc_mat3f_div_dest(mat3f src_dest, mat3f src_b)
+{
+	mat3f temp;
+
+	temp[0][0] = src_dest[0][0];
+	temp[0][1] = src_dest[0][1];
+	temp[0][2] = src_dest[0][2];
+
+	temp[1][0] = src_dest[1][0];
+	temp[1][1] = src_dest[1][1];
+	temp[1][2] = src_dest[1][2];
+
+	temp[2][0] = src_dest[2][0];
+	temp[2][1] = src_dest[2][1];
+	temp[2][2] = src_dest[2][2];
+
+	mat3f src_b_inv;
+	glmc_mat3f_inverse(src_b_inv, src_b);
+	glmc_mat3f_mul(src_dest, temp, src_b_inv);	
+}
+
 inline void glmc_mat3f_div_s(mat3f dest, mat3f src_a, float src_b)
 {
 	dest[0][0] = src_a[0][0] / src_b;

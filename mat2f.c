@@ -17,15 +17,7 @@ inline void glmc_mat2f_inverse(mat2f dest, mat2f src)
 	dest[1][1] =  1.0f*(src[0][0])/mat_det;
 }
 
-inline void glmc_mat2f_transpose_dest(mat2f dest, mat2f src)
-{
-	dest[0][0] = src[0][0];
-	dest[0][1] = src[1][0];
-
-	dest[1][0] = src[0][1];
-	dest[1][1] = src[1][1];
-}
-inline void glmc_mat2f_transpose(mat2f src_dest)
+inline void glmc_mat2f_transpose_dest(mat2f src_dest)
 {
 	mat2f temp;
 
@@ -40,6 +32,15 @@ inline void glmc_mat2f_transpose(mat2f src_dest)
 
 	src_dest[1][0] = temp[0][1];
 	src_dest[1][1] = temp[1][1];
+}
+inline void glmc_mat2f_transpose(mat2f dest, mat2f src)
+{
+	
+	dest[0][0] = src[0][0];
+	dest[0][1] = src[1][0];
+
+	dest[1][0] = src[0][1];
+	dest[1][1] = src[1][1];
 
 }
 
