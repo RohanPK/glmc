@@ -176,7 +176,7 @@ void glmc_vec3f_div_dest(vec3f src_dest, vec3f src_b)
 	glmc_vec3f_div(src_dest,src_dest,src_b);
 }
 
-void glmc_vec3f_div_s(vec3f dest, vec3f src_a, float src_b) 
+void glmc_vec3f_div_s(vec3f dest, float src_b) 
 {
 	// dest = src_a / scalar
 	assert(src_b != 0.0f);
@@ -234,4 +234,30 @@ void  glmc_vec3f_cross(vec3f dest, vec3f src_a, vec3f src_b)
 	dest[0]=src_a[1]*src_b[2]-src_a[2]*src_b[1];
 	dest[1]=src_a[2]*src_b[0]-src_a[0]*src_b[2];
 	dest[2]=src_a[0]*src_b[1]-src_a[1]*src_b[0];
+}
+
+inline void glmc_vec3f_reflection(vec3f dest, vec3f src, vec3f norm)
+{
+	glmc_vec3f_normlize(norm, norm);
+	float src_dot_norm = glmc_vec3f_dot(src,norm);
+	vec3f scalar_n;
+	
+	glmc_vec3f_mul_s(scalar_n, norm, 2*src_dot_norm);
+	glmc_vec3f_sub(dest,src,scalar_n);
+}
+
+inline void glmc_vec3f_refraction(vec3f dest, vec3f src, vec3f norm, float mu)
+{
+	vec3f src_cross_norm;
+	vec3f norm_cross_src_cross_norm;
+	vec3f coeff_dot_norm;
+	float norm_vector_coeff;
+	
+	glmc_vec3f_cross(src_cross_norm, src,norm);
+	glmc_vec3f_cross(norm_cross_src_cross_norm, norm,src_cross_norm);
+	norm_vector_coeff = sqrt( (1- (1/(mu*mu))*(glmc_vec3f_dot(src_cross_norm, src_cross_norm)))  );
+	glmc_vec3f_div_s(norm_cross_src_cross_norm, mu);
+	glmc_vec3f_mul_s(coeff_dot_norm, norm, norm_vector_coeff);
+	
+	glmc_vec3f_sub(dest, norm_cross_src_cross_norm, coeff_dot_norm);
 }

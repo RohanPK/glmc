@@ -25,6 +25,25 @@
 
 #include "glmc.h"
 
+inline void glmc_mat3f_input(mat3f dest)
+{
+	scanf("%f", &dest[0][0]);
+	scanf("%f", &dest[1][0]);
+	scanf("%f", &dest[2][0]);
+
+	scanf("%f", &dest[0][1]);
+	scanf("%f", &dest[1][1]);
+	scanf("%f", &dest[2][1]);
+
+	scanf("%f", &dest[0][2]);
+	scanf("%f", &dest[1][2]);
+	scanf("%f", &dest[2][2]);
+
+	#ifdef NORMALISE 
+		glmc_mat3f_normlize_dest(dest);
+	#endif
+}
+
 inline float glmc_mat3f_determinant(mat3f src)
 {
 	return src[0][0]*(src[1][1]*src[2][2] - src[2][1]*src[1][2] ) - (src[1][0]*(src[0][1]*src[2][2] - src[2][1]*src[0][2] )) + src[2][0]*(src[0][1]*src[1][2] - src[0][2]*src[1][1]);
@@ -350,7 +369,7 @@ inline void glmc_mat3f_msub(mat3f dest, mat3f src_a, mat3f src_b)
 	dest[2][2] = dest[2][2] - ( ( src_a[0][2]*src_b[2][0] ) + ( src_a[1][2]*src_b[2][1] ) + ( src_a[2][2]*src_b[2][2] ) );
 }
 
-inline void glmc_mat3f_vec3f(vec3f dest, mat3f src_a, vec3f src_b)
+inline void glmc_mat3f_mul_vec3f(vec3f dest, mat3f src_a, vec3f src_b)
 {
 	dest[0] = src_a[0][0]*src_b[0] + src_a[1][0]*src_b[1] + src_a[2][0]*src_b[2];
 	dest[1] = src_a[0][1]*src_b[0] + src_a[1][1]*src_b[1] + src_a[2][1]*src_b[2];
@@ -385,4 +404,34 @@ inline void glmc_mat3f_translation(mat3f dest, float src_x, float src_y)
 	dest[2][0] = src_x;
 	dest[2][1] = src_y;
 	dest[2][2] = 1.0f;
+}
+
+void glmc_mat3f_to_glsl3f(glsl3f dest, mat3f src)
+{
+	dest[0] = src[0][0];
+	dest[1] = src[1][0];
+	dest[2] = src[2][0];
+
+	dest[3] = src[0][1];
+	dest[4] = src[1][1];
+	dest[5] = src[2][1];
+
+	dest[6] = src[0][2];
+	dest[7] = src[1][2];
+	dest[8] = src[2][2];
+
+}
+void glmc_glsl3f_to_mat3f(mat3f dest, glsl3f src)
+{
+	dest[0][0] = src[0];
+	dest[1][0] = src[1];
+	dest[2][0] = src[2];
+
+	dest[0][1] = src[3];
+	dest[1][1] = src[4];
+	dest[2][1] = src[5];
+
+	dest[0][2] = src[6];
+	dest[1][2] = src[7];
+	dest[2][2] = src[8];
 }
