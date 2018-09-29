@@ -180,6 +180,7 @@ inline void glmc_mat2f_madd(mat2f dest, mat2f src_a, mat2f src_b)
 	dest[1][1] = dest[1][1] + ( ( src_a[0][1]*src_b[1][0] ) + ( src_a[1][1]*src_b[1][1] ) + ( src_a[2][1]*src_b[1][2] ) );
 
 }
+
 inline void glmc_mat2f_msub(mat2f dest, mat2f src_a, mat2f src_b)
 {
 	dest[0][0] = dest[0][0] - ( ( src_a[0][0]*src_b[0][0] ) + ( src_a[1][0]*src_b[0][1] ) + ( src_a[2][0]*src_b[0][2] ) );
@@ -187,4 +188,28 @@ inline void glmc_mat2f_msub(mat2f dest, mat2f src_a, mat2f src_b)
 
 	dest[1][0] = dest[1][0] - ( ( src_a[0][0]*src_b[1][0] ) + ( src_a[1][0]*src_b[1][1] ) + ( src_a[2][0]*src_b[1][2] ) );
 	dest[1][1] = dest[1][1] - ( ( src_a[0][1]*src_b[1][0] ) + ( src_a[1][1]*src_b[1][1] ) + ( src_a[2][1]*src_b[1][2] ) );
+}
+
+inline void glmc_mat2f_vec2f(vec2f dest, mat2f src_a, vec2f src_b)
+{
+	dest[0] = src_a[0][0]*src_b[0] + src_a[1][0]*src_b[1];
+	dest[1] = src_a[0][1]*src_b[0] + src_a[1][1]*src_b[1];
+}
+
+inline void glmc_mat2f_scale(mat2f dest, float src_x)
+{
+	dest[0][0] = src_x;
+	dest[0][1] = 0;
+
+	dest[1][0] = 0;
+	dest[1][1] = 1;
+}
+
+inline void glmc_mat2f_translation(mat2f dest, float src_x)
+{
+	dest[0][0] = 1.0f;
+	dest[0][1] = 0;
+
+	dest[2][0] = src_x;
+	dest[2][1] = 1.0f;
 }

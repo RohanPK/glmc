@@ -110,24 +110,24 @@ inline void glmc_mat4f_transpose_dest(mat4f src_dest)
 	
 
 	src_dest[0][0] = temp[0][0];
-	temp[0][1] = temp[0][1];
-	temp[0][2] = temp[0][2];
-	temp[0][3] = temp[0][3];
+	src_dest[0][1] = temp[0][1];
+	src_dest[0][2] = temp[0][2];
+	src_dest[0][3] = temp[0][3];
 
-	temp[1][0] = temp[1][0];
-	temp[1][1] = temp[1][1];
-	temp[1][2] = temp[1][2];
-	temp[1][3] = temp[1][3];
+	src_dest[1][0] = temp[1][0];
+	src_dest[1][1] = temp[1][1];
+	src_dest[1][2] = temp[1][2];
+	src_dest[1][3] = temp[1][3];
 
-	temp[2][0] = temp[2][0];
-	temp[2][1] = temp[2][1];
-	temp[2][2] = temp[2][2];
-	temp[2][3] = temp[2][3];
+	src_dest[2][0] = temp[2][0];
+	src_dest[2][1] = temp[2][1];
+	src_dest[2][2] = temp[2][2];
+	src_dest[2][3] = temp[2][3];
 
-	temp[3][0] = temp[3][0];
-	temp[3][1] = temp[3][1];
-	temp[3][2] = temp[3][2];
-	temp[3][3] = temp[3][3];
+	src_dest[3][0] = temp[3][0];
+	src_dest[3][1] = temp[3][1];
+	src_dest[3][2] = temp[3][2];
+	src_dest[3][3] = temp[3][3];
 
 	
 }
@@ -544,21 +544,29 @@ inline void glmc_mat4f_identity(mat4f dest)
 	dest[3][3] = 1.0f;
 }
 
-inline void glmc_mat4f_scale(mat4f dest, float src_sx, float src_sy, float src_sz)
+inline void glmc_mat4f_vec4f(vec4f dest, mat4f src_a, vec4f src_b)
 {
-	dest[0][0] = src_sx;
+	dest[0] = src_a[0][0]*src_b[0] + src_a[1][0]*src_b[1] + src_a[2][0]*src_b[2] + src_a[3][0]*src_b[3];
+	dest[1] = src_a[0][1]*src_b[0] + src_a[1][1]*src_b[1] + src_a[2][1]*src_b[2] + src_a[3][1]*src_b[3];
+	dest[2] = src_a[0][2]*src_b[0] + src_a[1][2]*src_b[2] + src_a[2][2]*src_b[2] + src_a[3][2]*src_b[3];
+	dest[3] = src_a[0][3]*src_b[0] + src_a[1][3]*src_b[3] + src_a[2][3]*src_b[2] + src_a[3][3]*src_b[3];
+}
+
+inline void glmc_mat4f_scale(mat4f dest, float src_x, float src_y, float src_z)
+{
+	dest[0][0] = src_x;
 	dest[0][1] = 0;
 	dest[0][2] = 0;
 	dest[0][3] = 0;
 
 	dest[1][0] = 0;
-	dest[1][1] = src_sy;
+	dest[1][1] = src_y;
 	dest[1][2] = 0;
 	dest[1][3] = 0;
 
 	dest[2][0] = 0;
 	dest[2][1] = 0;
-	dest[2][2] = src_sz;
+	dest[2][2] = src_z;
 	dest[2][3] = 0;
 
 	dest[3][0] = 0;
@@ -567,7 +575,7 @@ inline void glmc_mat4f_scale(mat4f dest, float src_sx, float src_sy, float src_s
 	dest[3][3] = 1.0f;
 }
 
-inline void glmc_mat4f_translation(mat4f dest, float src_t1, float src_t2, float src_t3)
+inline void glmc_mat4f_translation(mat4f dest, float src_x, float src_y, float src_z)
 {
 	dest[0][0] = 1.0f;
 	dest[0][1] = 0;
@@ -584,9 +592,9 @@ inline void glmc_mat4f_translation(mat4f dest, float src_t1, float src_t2, float
 	dest[2][2] = 1.0f;
 	dest[2][3] = 0;
 
-	dest[3][0] = src_t1;
-	dest[3][1] = src_t2;
-	dest[3][2] = src_t3;
+	dest[3][0] = src_x;
+	dest[3][1] = src_y;
+	dest[3][2] = src_z;
 	dest[3][3] = 1.0f;
 }
 
@@ -615,3 +623,4 @@ inline void glmc_mat4f_rotation(mat4f dest, float src_ux, float src_uy, float sr
 	dest[3][2] = 0;
 	dest[3][3] = 1.0f;
 }
+ 

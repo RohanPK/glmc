@@ -35,16 +35,17 @@ inline void glmc_mat3f_inverse(mat3f dest, mat3f src)
 	float mat_det = glmc_mat3f_determinant(src);
 	
 	dest[0][0] =  1.0f*( src[1][1]*src[2][2] - src[1][2]*src[2][1] )/mat_det;
-	dest[1][0] = -1.0f*( src[0][1]*src[2][2] - src[0][2]*src[2][1] )/mat_det;
-	dest[2][0] =  1.0f*( src[0][1]*src[1][2] - src[0][2]*src[1][1] )/mat_det;
+	dest[0][1] = -1.0f*( src[0][1]*src[2][2] - src[0][2]*src[2][1] )/mat_det;
+	dest[0][2] =  1.0f*( src[0][1]*src[1][2] - src[0][2]*src[1][1] )/mat_det;
 
-	dest[0][1] = -1.0f*( src[1][0]*src[2][2] - src[1][2]*src[2][0] )/mat_det;
+	dest[1][0] = -1.0f*( src[1][0]*src[2][2] - src[1][2]*src[2][0] )/mat_det;
 	dest[1][1] =  1.0f*( src[0][0]*src[2][2] - src[0][2]*src[2][0] )/mat_det;
-	dest[2][1] = -1.0f*( src[0][0]*src[1][2] - src[0][2]*src[1][0] )/mat_det;
+	dest[1][2] = -1.0f*( src[0][0]*src[1][2] - src[0][2]*src[1][0] )/mat_det;
 
-	dest[0][2] =  1.0f*( src[1][0]*src[2][1] - src[1][1]*src[2][0] )/mat_det;
-	dest[1][2] = -1.0f*( src[0][0]*src[2][1] - src[0][1]*src[2][0] )/mat_det;
+	dest[2][0] =  1.0f*( src[1][0]*src[2][1] - src[1][1]*src[2][0] )/mat_det;
+	dest[2][1] = -1.0f*( src[0][0]*src[2][1] - src[0][1]*src[2][0] )/mat_det;
 	dest[2][2] =  1.0f*( src[0][0]*src[1][1] - src[0][1]*src[1][0] )/mat_det;
+
 }
 
 
@@ -63,7 +64,7 @@ inline void glmc_mat3f_transpose(mat3f dest, mat3f src)
 	dest[2][2] = src[2][2];
 }
 
-inline inline void glmc_mat3f_transpose_dest(mat3f src_dest)
+inline void glmc_mat3f_transpose_dest(mat3f src_dest)
 {
 	mat3f temp;
 	
@@ -347,4 +348,41 @@ inline void glmc_mat3f_msub(mat3f dest, mat3f src_a, mat3f src_b)
 	dest[2][0] = dest[2][0] - ( ( src_a[0][0]*src_b[2][0] ) + ( src_a[1][0]*src_b[2][1] ) + ( src_a[2][0]*src_b[2][2] ) );
 	dest[2][1] = dest[2][1] - ( ( src_a[0][1]*src_b[2][0] ) + ( src_a[1][1]*src_b[2][1] ) + ( src_a[2][1]*src_b[2][2] ) );
 	dest[2][2] = dest[2][2] - ( ( src_a[0][2]*src_b[2][0] ) + ( src_a[1][2]*src_b[2][1] ) + ( src_a[2][2]*src_b[2][2] ) );
+}
+
+inline void glmc_mat3f_vec3f(vec3f dest, mat3f src_a, vec3f src_b)
+{
+	dest[0] = src_a[0][0]*src_b[0] + src_a[1][0]*src_b[1] + src_a[2][0]*src_b[2];
+	dest[1] = src_a[0][1]*src_b[0] + src_a[1][1]*src_b[1] + src_a[2][1]*src_b[2];
+	dest[2] = src_a[0][2]*src_b[0] + src_a[1][2]*src_b[2] + src_a[2][2]*src_b[2];
+}
+
+inline void glmc_mat3f_scale(mat3f dest, float src_x, float src_y)
+{
+	dest[0][0] = src_x;
+	dest[0][1] = 0;
+	dest[0][2] = 0;
+
+	dest[1][0] = 0;
+	dest[1][1] = src_y;
+	dest[1][2] = 0;
+
+	dest[2][0] = 0;
+	dest[2][1] = 0;
+	dest[2][2] = 1;
+}
+
+inline void glmc_mat3f_translation(mat3f dest, float src_x, float src_y)
+{
+	dest[0][0] = 1.0f;
+	dest[0][1] = 0;
+	dest[0][2] = 0;
+
+	dest[1][0] = 0;
+	dest[1][1] = 1.0f;
+	dest[1][2] = 0;
+
+	dest[2][0] = src_x;
+	dest[2][1] = src_y;
+	dest[2][2] = 1.0f;
 }
