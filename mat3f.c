@@ -25,7 +25,7 @@
 
 #include "glmc.h"
 
-inline void glmc_mat3f_input(mat3f dest)
+inline void glmc_mat3f_scan(mat3f dest)
 {
 	scanf("%f", &dest[0][0]);
 	scanf("%f", &dest[1][0]);
@@ -435,3 +435,4 @@ void glmc_glsl3f_to_mat3f(mat3f dest, glsl3f src)
 	dest[1][2] = src[7];
 	dest[2][2] = src[8];
 }
+

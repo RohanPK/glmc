@@ -1,63 +1,12 @@
 #include <stdio.h>
+#include <math.h>
 #include "glmc.h"
 
-void print_vec_2f(vec2f vec, int precision)
-{
-	for(int i = 0; i<2; i++)
-	{
-		printf("%8.*f ",precision, vec[i]);
-		printf("\n");
-	}
-	printf("\n");
-}
-void print_vec_3f(vec3f vec, int precision)
-{
-	for(int i = 0; i<3; i++)
-	{
-		printf("%8.*f ",precision, vec[i]);
-		printf("\n");
-	}
-	printf("\n");
-}
-void print_vec_4f(vec4f vec, int precision)
-{
-	for(int i = 0; i<4; i++)
-	{
-		printf("%8.*f ",precision, vec[i]);
-		printf("\n");
-	}
-	printf("\n");
-}
-
-void print_mat_2f(mat2f mat, int precision)
-{
-	for(int i = 0; i<2; i++)
-	{
-		for(int j = 0; j<2; j++)
-		{
-			printf("%8.*f ",precision, mat[j][i]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-}
 void print_mat_3f(mat3f mat, int precision)
 {
 	for(int i = 0; i<3; i++)
 	{
 		for(int j = 0; j<3; j++)
-		{
-			printf("%8.*f ",precision, mat[j][i]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-}
-void print_mat_4f(mat4f mat, int precision)
-{
-	for(int i = 0; i<4; i++)
-	{
-		for(int j = 0; j<4; j++)
 		{
 			printf("%8.*f ",precision, mat[j][i]);
 		}
@@ -104,7 +53,7 @@ void check_mat3f(mat3f ans, mat3f expected_output, char function[])
 	{
 		for(int j=0; j<3; j++)
 		{
-			if(ans[i][j]!=expected_output[i][j])
+			if(ans[i][j]-expected_output[i][j]>=0.001)
 			{
 				flag=1;
 			}
@@ -123,9 +72,8 @@ void check_mat3f(mat3f ans, mat3f expected_output, char function[])
 	}
 }
 
-int main(int arg, char **argc)
+void unit_test_case_mat3f()
 {
-
 	mat3f A3 = {{1,4,7}, {2,5,8}, {3,6,10}};
 	mat3f B3 = {{2,5,8}, {3,6,9}, {4,7,9}};
 	mat3f dest;
@@ -163,13 +111,61 @@ int main(int arg, char **argc)
 	check_mat3f(dest,expected_output,"Mat3f Mul-Scalar");
 
 	glmc_mat3f_inverse(dest,A3);
-	assign_mat3f(expected_output,-2/3,-2/3,1,-4/3,11/3,-2,1,-2,1);
-	check_mat3f(A3,expected_output,"Mat3f Inverse");
+	assign_mat3f(expected_output,-2/3.0,-2/3.0,1.0,-4/3.0,11/3.0,-2.0,1.0,-2.0,1.0);
+	check_mat3f(dest,expected_output,"Mat3f Inverse");
 	reset_a3(A3);
 
 	glmc_mat3f_div(dest,A3,B3);
-	assign_mat3f(expected_output,4/3,1/3,-5/3,-1/3,2/3,11/3,0,0,-1);
-	check_mat3f(A3,expected_output,"Mat3f Div");
+	assign_mat3f(expected_output,4/3.0,1/3.0,-5/3.0,-1/3.0,2/3.0,11/3.0,0.0,0.0,-1.0);
+	check_mat3f(dest,expected_output,"Mat3f Div");
 	reset_a3(A3);
+
+	glmc_mat3f_div_dest(A3,B3);
+	assign_mat3f(expected_output,4/3.0,1/3.0,-5/3.0,-1/3.0,2/3.0,11/3.0,0.0,0.0,-1.0);
+	check_mat3f(A3,expected_output,"Mat3f Div-Dest");
+	reset_a3(A3);
+
+	glmc_mat3f_div_s(dest,A3,2);
+	assign_mat3f(expected_output,0.5,2.0,3.5,1.0,2.5,4.0,1.5,3.0,5.0);
+	check_mat3f(dest,expected_output,"Mat3f Div-Scalar");
+
+	glmc_mat3f_div_dest_s(A3,2);
+	assign_mat3f(expected_output,0.5,2.0,3.5,1.0,2.5,4.0,1.5,3.0,5.0);
+	check_mat3f(A3,expected_output,"Mat3f Div-Dest-Scalar");
+	reset_a3(A3);
+
+	glmc_mat3f_transpose(dest,A3);
+	assign_mat3f(expected_output,1,2,3,4,5,6,7,8,10);
+	check_mat3f(dest,expected_output,"Mat3f Transpose-Dest");
+
+	glmc_mat3f_transpose_dest(A3);
+	assign_mat3f(expected_output,1,2,3,4,5,6,7,8,10);
+	check_mat3f(dest,expected_output,"Mat3f Transpose-Dest");
+	reset_a3(A3);
+
+	glmc_mat3f_normlize(dest,A3);
+	assign_mat3f(expected_output,-1/3.0,-4/3.0,-7/3.0,-2/3.0,-5/3.0,-8/3.0,-3/3.0,-6/3.0,-10/3.0);
+	check_mat3f(dest,expected_output,"Mat3f Normalize");
+
+	glmc_mat3f_normlize_dest	(A3);
+	assign_mat3f(expected_output,-1/3.0,-4/3.0,-7/3.0,-2/3.0,-5/3.0,-8/3.0,-3/3.0,-6/3.0,-10/3.0);
+	check_mat3f(A3,expected_output,"Mat3f Normalize-Dest");
+	reset_a3(A3);
+
+	glmc_mat3f_scale(A3,2,3);
+	assign_mat3f(expected_output,2,0,0,0,3,0,0,0,1);
+	check_mat3f(A3,expected_output,"Mat3f Scale");
+
+	glmc_mat3f_translation(A3,2,3);
+	assign_mat3f(expected_output,1,0,0,0,1,0,2,3,1);
+	check_mat3f(A3,expected_output,"Mat3f Translation");
+
+	printf("\n\n\n");
+}
+
+int main(int arg, char **argc)
+{
+
+	unit_test_case_mat3f();
 	return 0;
 }

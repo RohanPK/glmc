@@ -1,6 +1,6 @@
 #include "glmc.h"
 
-inline void glmc_mat2f_input(mat2f dest)
+inline void glmc_mat2f_scan(mat2f dest)
 {
 	scanf("%f",&dest[0][0]);
 	scanf("%f",&dest[1][0]);

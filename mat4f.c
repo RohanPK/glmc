@@ -25,7 +25,7 @@
 
 #include "glmc.h"
 
-inline void glmc_mat4f_input(mat4f dest)
+inline void glmc_mat4f_scan(mat4f dest)
 {
 	scanf("%f", &dest[0][0]);
 	scanf("%f", &dest[1][0]);
@@ -67,25 +67,25 @@ inline void glmc_mat4f_inverse(mat4f dest, mat4f src)
 	float mat_det;
 	mat_det = glmc_mat4f_determinant(src);
 
-	dest[0][0] =  1.0f*((src[1][1]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][1]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) + (src[3][1]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))))*mat_det;
-	dest[0][1] = -1.0f*((src[0][1]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][1]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][1]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))))*mat_det;
-	dest[0][2] =  1.0f*((src[0][1]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) - (src[1][1]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][1]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))*mat_det;
-	dest[0][3] = -1.0f*((src[0][1]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))) - (src[1][1]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))) + (src[2][1]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))*mat_det;
+	dest[0][0] =  1.0f*((src[1][1]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][1]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) + (src[3][1]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))))/mat_det;
+	dest[0][1] = -1.0f*((src[0][1]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][1]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][1]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))))/mat_det;
+	dest[0][2] =  1.0f*((src[0][1]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) - (src[1][1]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][1]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))/mat_det;
+	dest[0][3] = -1.0f*((src[0][1]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))) - (src[1][1]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))) + (src[2][1]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))/mat_det;
 
-	dest[1][0] = -1.0f*((src[1][0]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][0]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) + (src[3][0]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))))*mat_det;
-	dest[1][1] =  1.0f*((src[0][0]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][0]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][0]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))))*mat_det;
-	dest[1][2] = -1.0f*((src[0][0]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) - (src[1][0]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][0]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))*mat_det;
-	dest[1][3] =  1.0f*((src[0][0]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))) - (src[1][0]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))) + (src[2][0]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))*mat_det;
+	dest[1][0] = -1.0f*((src[1][0]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][0]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) + (src[3][0]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))))/mat_det;
+	dest[1][1] =  1.0f*((src[0][0]*((src[2][2]*src[3][3])-(src[3][2]*src[2][3]))) - (src[2][0]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][0]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))))/mat_det;
+	dest[1][2] = -1.0f*((src[0][0]*((src[1][2]*src[3][3])-(src[3][2]*src[1][3]))) - (src[1][0]*((src[0][2]*src[3][3])-(src[3][2]*src[0][3]))) + (src[3][0]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))/mat_det;
+	dest[1][3] =  1.0f*((src[0][0]*((src[1][2]*src[2][3])-(src[2][2]*src[1][3]))) - (src[1][0]*((src[0][2]*src[2][3])-(src[2][2]*src[0][3]))) + (src[2][0]*((src[0][2]*src[1][3])-(src[1][2]*src[0][3]))))/mat_det;
 
-	dest[2][0] =  1.0f*((src[1][0]*((src[2][1]*src[3][3])-(src[3][1]*src[2][3]))) - (src[2][0]*((src[1][1]*src[3][3])-(src[3][1]*src[1][3]))) + (src[3][0]*((src[1][1]*src[2][3])-(src[2][1]*src[1][3]))))*mat_det;
-	dest[2][1] = -1.0f*((src[0][0]*((src[2][1]*src[3][3])-(src[3][1]*src[2][3]))) - (src[2][0]*((src[0][1]*src[3][3])-(src[3][1]*src[0][3]))) + (src[3][0]*((src[0][1]*src[2][3])-(src[2][1]*src[0][3]))))*mat_det;
-	dest[2][2] =  1.0f*((src[0][0]*((src[1][1]*src[3][3])-(src[3][1]*src[1][3]))) - (src[1][0]*((src[0][1]*src[3][3])-(src[3][1]*src[0][3]))) + (src[3][0]*((src[0][1]*src[1][3])-(src[1][1]*src[0][3]))))*mat_det;
-	dest[2][3] = -1.0f*((src[0][0]*((src[1][1]*src[2][3])-(src[2][1]*src[1][3]))) - (src[1][0]*((src[0][1]*src[2][3])-(src[2][1]*src[0][3]))) + (src[2][0]*((src[0][1]*src[1][3])-(src[1][1]*src[0][3]))))*mat_det;
+	dest[2][0] =  1.0f*((src[1][0]*((src[2][1]*src[3][3])-(src[3][1]*src[2][3]))) - (src[2][0]*((src[1][1]*src[3][3])-(src[3][1]*src[1][3]))) + (src[3][0]*((src[1][1]*src[2][3])-(src[2][1]*src[1][3]))))/mat_det;
+	dest[2][1] = -1.0f*((src[0][0]*((src[2][1]*src[3][3])-(src[3][1]*src[2][3]))) - (src[2][0]*((src[0][1]*src[3][3])-(src[3][1]*src[0][3]))) + (src[3][0]*((src[0][1]*src[2][3])-(src[2][1]*src[0][3]))))/mat_det;
+	dest[2][2] =  1.0f*((src[0][0]*((src[1][1]*src[3][3])-(src[3][1]*src[1][3]))) - (src[1][0]*((src[0][1]*src[3][3])-(src[3][1]*src[0][3]))) + (src[3][0]*((src[0][1]*src[1][3])-(src[1][1]*src[0][3]))))/mat_det;
+	dest[2][3] = -1.0f*((src[0][0]*((src[1][1]*src[2][3])-(src[2][1]*src[1][3]))) - (src[1][0]*((src[0][1]*src[2][3])-(src[2][1]*src[0][3]))) + (src[2][0]*((src[0][1]*src[1][3])-(src[1][1]*src[0][3]))))/mat_det;
 
-	dest[3][0] = -1.0f*((src[1][0]*((src[2][1]*src[3][2])-(src[3][1]*src[2][2]))) - (src[2][0]*((src[1][1]*src[3][2])-(src[3][1]*src[1][2]))) + (src[3][0]*((src[1][1]*src[2][2])-(src[2][1]*src[1][2]))))*mat_det;
-	dest[3][1] =  1.0f*((src[0][0]*((src[2][1]*src[3][2])-(src[3][1]*src[2][2]))) - (src[2][0]*((src[0][1]*src[3][2])-(src[3][1]*src[0][2]))) + (src[3][0]*((src[0][1]*src[2][2])-(src[2][1]*src[0][2]))))*mat_det;
-	dest[3][2] = -1.0f*((src[0][0]*((src[1][1]*src[3][2])-(src[3][1]*src[1][2]))) - (src[1][0]*((src[0][1]*src[3][2])-(src[3][1]*src[0][2]))) + (src[3][0]*((src[0][1]*src[1][2])-(src[1][1]*src[0][2]))))*mat_det;
-	dest[3][3] =  1.0f*((src[0][0]*((src[1][1]*src[2][2])-(src[2][1]*src[1][2]))) - (src[1][0]*((src[0][1]*src[2][2])-(src[2][1]*src[0][2]))) + (src[2][0]*((src[0][1]*src[1][2])-(src[1][1]*src[0][2]))))*mat_det;
+	dest[3][0] = -1.0f*((src[1][0]*((src[2][1]*src[3][2])-(src[3][1]*src[2][2]))) - (src[2][0]*((src[1][1]*src[3][2])-(src[3][1]*src[1][2]))) + (src[3][0]*((src[1][1]*src[2][2])-(src[2][1]*src[1][2]))))/mat_det;
+	dest[3][1] =  1.0f*((src[0][0]*((src[2][1]*src[3][2])-(src[3][1]*src[2][2]))) - (src[2][0]*((src[0][1]*src[3][2])-(src[3][1]*src[0][2]))) + (src[3][0]*((src[0][1]*src[2][2])-(src[2][1]*src[0][2]))))/mat_det;
+	dest[3][2] = -1.0f*((src[0][0]*((src[1][1]*src[3][2])-(src[3][1]*src[1][2]))) - (src[1][0]*((src[0][1]*src[3][2])-(src[3][1]*src[0][2]))) + (src[3][0]*((src[0][1]*src[1][2])-(src[1][1]*src[0][2]))))/mat_det;
+	dest[3][3] =  1.0f*((src[0][0]*((src[1][1]*src[2][2])-(src[2][1]*src[1][2]))) - (src[1][0]*((src[0][1]*src[2][2])-(src[2][1]*src[0][2]))) + (src[2][0]*((src[0][1]*src[1][2])-(src[1][1]*src[0][2]))))/mat_det;
 	
 }
 
@@ -579,6 +579,54 @@ inline void glmc_mat4f_mul_vec4f(vec4f dest, mat4f src_a, vec4f src_b)
 	dest[3] = src_a[0][3]*src_b[0] + src_a[1][3]*src_b[3] + src_a[2][3]*src_b[2] + src_a[3][3]*src_b[3];
 }
 
+inline void glmc_mat4f_perspective_projection(mat4f dest, float src_fovy, float src_aspect, float src_z_near, float src_z_far)
+{
+	float tan_half_fovy = tan(src_fovy/2);
+
+	dest[0][0] = 1.0f/( src_aspect*tan_half_fovy );
+	dest[0][1] = 0;
+	dest[0][2] = 0;
+	dest[0][3] = 0;
+
+	dest[1][0] = 0;
+	dest[1][1] = 1.0f/tan_half_fovy;
+	dest[1][2] = 0;
+	dest[1][3] = 0;
+
+	dest[2][0] = 0;
+	dest[2][1] = 0;
+	dest[2][2] = src_z_far/(src_z_far - src_z_near);
+	dest[2][3] = 1.0f;
+
+	dest[3][0] = 0;
+	dest[3][1] = 0;
+	dest[3][2] = 0;
+	dest[3][3] = -1.0f*(src_z_far*src_z_near)/(src_z_far - src_z_near);
+}
+
+inline void glmc_mat4f_ortho_projection(mat4f dest, float src_left, float src_right, float src_bottom, float src_top)
+{
+	dest[0][0] = 2.0f/(src_right - src_left);
+	dest[0][1] = 1.0f;
+	dest[0][2] = 1.0f;
+	dest[0][3] = 1.0f;
+
+	dest[1][0] = 1.0f;
+	dest[1][1] = 2.0f/(src_top - src_bottom);
+	dest[1][2] = 1.0f;
+	dest[1][3] = 1.0f;
+
+	dest[2][0] = 1.0f;
+	dest[2][1] = 1.0f;
+	dest[2][2] = 1.0f;
+	dest[2][3] = 1.0f;
+
+	dest[3][0] = -1.0f*(src_right + src_left)/(src_right - src_left);
+	dest[3][1] = -1.0f*(src_top + src_bottom)/(src_top - src_bottom);
+	dest[3][2] = 1.0f;
+	dest[3][3] = 1.0f;
+}
+
 inline void glmc_mat4f_scale(mat4f dest, float src_x, float src_y, float src_z)
 {
 	dest[0][0] = src_x;
@@ -625,24 +673,24 @@ inline void glmc_mat4f_translation(mat4f dest, float src_x, float src_y, float s
 	dest[3][3] = 1.0f;
 }
 
-inline void glmc_mat4f_rotation(mat4f dest, float src_ux, float src_uy, float src_uz, float theta)
+inline void glmc_mat4f_rotation(mat4f dest, float src_x, float src_y, float src_z, float theta)
 {
 	float c = cos(theta);
 	float s = sin(theta);
 
-	dest[0][0] = c + src_ux*src_ux*(1-c);
-	dest[0][1] = src_uy*src_ux*(1-c) + src_uz*s;
-	dest[0][2] = src_uz*src_ux*(1-c) - src_uy*s;
+	dest[0][0] = c + src_x*src_x*(1-c);
+	dest[0][1] = src_y*src_x*(1-c) + src_z*s;
+	dest[0][2] = src_z*src_x*(1-c) - src_y*s;
 	dest[0][3] = 0;
 
-	dest[1][0] = src_ux*src_uy*(1-c) - src_uz*s;
-	dest[1][1] = c + src_uy*src_uy*(1-c);
-	dest[1][2] = src_uz*src_uy*(1-c) + src_ux*(s);
+	dest[1][0] = src_x*src_y*(1-c) - src_z*s;
+	dest[1][1] = c + src_y*src_y*(1-c);
+	dest[1][2] = src_z*src_y*(1-c) + src_x*(s);
 	dest[1][3] = 0;
 
-	dest[2][0] = src_ux*src_uz*(1-c) + src_uy*s;
-	dest[2][1] = src_uy*src_uz*(1-c) - src_ux*s;
-	dest[2][2] = c + src_uz*src_uz*(1-c);
+	dest[2][0] = src_x*src_z*(1-c) + src_y*s;
+	dest[2][1] = src_y*src_z*(1-c) - src_x*s;
+	dest[2][2] = c + src_z*src_z*(1-c);
 	dest[2][3] = 0;
 
 	dest[3][0] = 0;
@@ -650,7 +698,7 @@ inline void glmc_mat4f_rotation(mat4f dest, float src_ux, float src_uy, float sr
 	dest[3][2] = 0;
 	dest[3][3] = 1.0f;
 }
- 
+
 inline void glmc_mat4f_to_glsl4f(glsl4f dest, mat4f src)
 {
 	dest[0] = src[0][0];
